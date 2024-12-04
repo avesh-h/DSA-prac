@@ -124,3 +124,88 @@ console.log("toppppppp", topKFrequent([1, 2, 2, 3, 3, 3], 2));
 // console.log("toppppppp", topKFrequent([7, 7], 1)); //[7]
 
 console.log("toppppppp", topKFrequent([1], 1));
+
+// If final number is more than the nearest number then reduce the number from left side and less so then add in righ
+const romanObj = {
+  I: 1,
+  V: 5,
+  X: 10,
+  L: 50,
+  C: 100,
+  D: 500,
+  M: 1000,
+};
+
+// const romanValues = [1, 5, 10, 50, 100, 500, 1000];
+
+const romanToInt = (romanNumber) => {
+  let target = 0;
+
+  for (let i = 0; i < romanNumber.length; i++) {
+    if (romanObj[romanNumber[i + 1]] > romanObj[romanNumber[i]]) {
+      target = target - romanObj[romanNumber[i]];
+    } else {
+      target += romanObj[romanNumber[i]];
+    }
+  }
+  return target;
+};
+
+console.log("romannnnnnnnnnnnn", romanToInt("MCMXCIV")); //1994
+console.log("romannnnnnnnnnnnn", romanToInt("LVIII")); //58
+
+const openParentheses = (str) => {
+  const hashObj = {};
+  let bool = false;
+
+  for (let i = 0; i < str.length; i++) {
+    if (Object.keys(hashObj).length) {
+      if (str[i]) {
+      }
+    } else {
+      if (str[i] === ")" || str[i] === "]" || str[i] === "}") {
+        bool = false;
+      } else {
+        hashObj[str[i]] = i;
+      }
+    }
+  }
+};
+
+// Won't work because every time it calls the prevTime initialized and no hold the previous time value everytime will be undefined
+// const throttleFunc = (func, delays) => {
+//   let prevTime;
+
+//   let newTime = new Date().getTime();
+
+//   if (newTime - prevTime > delays) {
+//     prevTime = newTime;
+//     return func();
+//   }
+// };
+
+// Closure Throttle check
+
+const throttleFunction = (func, delays) => {
+  let prevTime = 0;
+
+  // Now closure will remember the old refrence of prevTime
+  return (...args) => {
+    // let newTime = new Date().getTime();
+
+    // if (newTime - prevTime > delays) {
+    //   prevTime = newTime;
+    //   return func(...args);
+    // }
+    console.log("prevvvvvvvvv", prevTime);
+    prevTime++;
+  };
+};
+
+const ref = throttleFunction(() => {
+  console.log("forrrrrrrrrrrrrr");
+});
+
+for (let i = 0; i < 5; i++) {
+  ref();
+}
