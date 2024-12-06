@@ -155,22 +155,66 @@ console.log("romannnnnnnnnnnnn", romanToInt("MCMXCIV")); //1994
 console.log("romannnnnnnnnnnnn", romanToInt("LVIII")); //58
 
 const openParentheses = (str) => {
-  const hashObj = {};
+  /////////1 fail
+  // const hashObj = {};
+  // let bool = false;
+  // for (let i = 0; i < str.length; i++) {
+  //   if (Object.keys(hashObj).length) {
+  //     if (
+  //       (str[i] === ")" && "(" in hashObj && i - (hashObj["("] % 2)) ||
+  //       (str[i] === "}" && "{" in hashObj && i - (hashObj["{"] % 2)) ||
+  //       (str[i] === "]" && "[" in hashObj && i - (hashObj["["] % 2))
+  //     ) {
+  //       bool = true;
+  //     }
+  //   } else {
+  //     if (str[i] === ")" || str[i] === "]" || str[i] === "}") {
+  //       bool = false;
+  //     } else {
+  //       hashObj[str[i]] = i;
+  //     }
+  //   }
+  // }
+  // return bool;
+
   let bool = false;
 
+  const arr = [];
+
   for (let i = 0; i < str.length; i++) {
-    if (Object.keys(hashObj).length) {
-      if (str[i]) {
-      }
+    if (
+      (str[i] === "(" || str[i] === "[" || str[i] === "{") &&
+      str.length % 2 === 0
+    ) {
+      arr.push(str[i]);
     } else {
-      if (str[i] === ")" || str[i] === "]" || str[i] === "}") {
-        bool = false;
+      const lastEle = arr.pop();
+      if (
+        (str[i] === ")" && lastEle === "(") ||
+        (str[i] === "]" && lastEle === "[") ||
+        (str[i] === "}" && lastEle === "{")
+      ) {
+        bool = true;
       } else {
-        hashObj[str[i]] = i;
+        bool = false;
+        return bool;
       }
     }
   }
+  if (arr.length) {
+    return false;
+  }
+  return bool;
 };
+
+// console.log("booooooooolllllllllll", openParentheses("()"));
+// console.log("booooooooolllllllllll", openParentheses("()[]{}"));
+// console.log("booooooooolllllllllll", openParentheses("(]"));
+// console.log("booooooooolllllllllll", openParentheses("([])"));
+// console.log("booooooooolllllllllll", openParentheses("([)]"));
+// console.log("booooooooolllllllllll", openParentheses("(){}}{"));
+// console.log("booooooooolllllllllll", openParentheses("({{{{}}}))"));
+console.log("booooooooolllllllllll", openParentheses("[[[]"));
 
 // Won't work because every time it calls the prevTime initialized and no hold the previous time value everytime will be undefined
 // const throttleFunc = (func, delays) => {
@@ -202,10 +246,47 @@ const throttleFunction = (func, delays) => {
   };
 };
 
-const ref = throttleFunction(() => {
-  console.log("forrrrrrrrrrrrrr");
-});
+// const ref = throttleFunction(() => {
+//   console.log("forrrrrrrrrrrrrr");
+// });
 
-for (let i = 0; i < 5; i++) {
-  ref();
-}
+// for (let i = 0; i < 5; i++) {
+//   ref();
+// }
+
+const removeDuplicatesFromSortedArr = (nums) => {
+  // const hasObj = {};
+  // let k = 0;
+  // for (let i = 0; i < nums.length; i++) {
+  //   if (nums[i] in hasObj) {
+  //     nums.splice(i, 1);
+  //     nums.unshift("_");
+  //   } else {
+  //     hasObj[nums[i]] = i;
+  //     k++;
+  //   }
+  // }
+  // nums.reverse().sort((a, b) => a - b);
+  // console.log("nnnnnnnnnnnnnnnnn", nums);
+  // return k;
+  //OR
+  let i = 0;
+  for (let j = 0; j < nums.length; j++) {
+    if (nums[j] != nums[i]) nums[++i] = nums[j];
+  }
+  return ++i;
+  //OR
+  // let last = 0;
+  // for (let current = 0; current < nums.length; current++) {
+  //   if (nums[last] == nums[current]) continue;
+  //   last += 1;
+  //   nums[last] = nums[current];
+  // }
+  // console.log("nnnnnnnnnnnnnnnn", nums);
+  // return last + 1;
+};
+
+console.log(removeDuplicatesFromSortedArr([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]));
+// console.log(removeDuplicatesFromSortedArr([-3, -1, 0, 0, 0, 3, 3]));
+
+// console.log(removeDuplicatesFromSortedArr([1, 1, 2]));
